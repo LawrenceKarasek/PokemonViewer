@@ -2,11 +2,12 @@
 
 # Included Functionality
 
-All functional rquirements described below are included. To implement the requirements the following are included:
+All functional rquirements described at the bottom of the readme are included. To implement the requirements the following are included:
 
 - View in scrollable list using react-virtualization: This allows 150 pokemon to be loaded but not rendered until
   they are scrolled into views, improving performance.
 - Adding/removing pokemon per profile using checkboxes, creating a more intuitive user experience.
+- Error handling and an ErrorBondary are used to raise and display possible errors from remote api calls as well as display validation related to the user selection of pokemon.
 
 # Frameworks and Libraries
 
@@ -21,15 +22,12 @@ TIn addition to the default libraries already part of the project, the project u
   -H "Content-Type: application/json" \
   -d '{"username": "ashketchum", "email": "ash@pallet.com"}'
 
-- Security note: It was necessary to add a cors setup script with the client Vite URL( default http:/localhost:4200) to the Nestjs setup in order to allow the UI to communicate to the server.
-  This will need to be updated if a dfferent client URL is used.
+- Security note: It was necessary to add a cors setup script with the client Vite URL( default http:/localhost:4200) to the Nestjs setup in order to allow the UI to communicate to the server. This will need to be updated if a dfferent client URL is used.
 
 # Future Improvements
 
 Given time limitations, elements necessary for a production application are out of scope for this project but would be
 included if more time was available. These include:
-
-## Testing
 
 - Unit Testing: There is currently to unit testing. The reliability of the application could be improved by adding testing of the functional components
   that mimics user behavior using jest/React Testing Library, for example testing user selections in the UI. For the
@@ -37,12 +35,15 @@ included if more time was available. These include:
 
 - Styling/UI: The styling and UI could be improved through more extensive use of CSS.
 
-- Security: There is currently no authentication for accessing the application. Assuming this should not be public accessible, some type of authentication should be considered in a
-  production environment. A third-party solution like AWS Cognito could be used. Also, the proxy api's used have no security to ensure it is a valid user and request. After a user is
-  authenticated, javascript web tokens is a reliable and straightforward practice that could be used to authorize and passed as a header in each request.
+- Security: There is currently no authentication for accessing the application. Assuming this should not be public accessible, some type of authentication should be considered in a production environment. A third-party solution like AWS Cognito could be used. Also, the proxy api's used have no security to ensure it is a valid user and request. After a user is authenticated, javascript web tokens is a reliable and straightforward practice that could be used to authorize and passed as a header in each request.
 
 - Logging: The application can use more robust logging of errors to monitor production performance and troubleshoot errors. AWS Cloudwatch is a basic out-of-the box practice that
   could be used in AWS hosting environment.
+
+
+
+
+# Initial Requirements and Project Description
 
 # Chorus Interview
 
