@@ -24,43 +24,6 @@ TIn addition to the default libraries already part of the project, the project u
 
 - Security note: It was necessary to add a cors setup script with the client Vite URL( default http:/localhost:4200) to the Nestjs setup in order to allow the UI to communicate to the server. This will need to be updated if a dfferent client URL is used.
 
-# Future Improvements
-
-Given time limitations, elements necessary for a production application are out of scope for this project but would be
-included if more time was available. These include:
-
-- Unit Testing: There is currently to unit testing. The reliability of the application could be improved by adding testing of the functional components
-  that mimics user behavior using jest/React Testing Library, for example testing user selections in the UI. For the
-  api requests, mock data can be used to simulate responses and check validation behavior. End-to-end testing can also be considered using Cypress or something similar.
-
-- Styling/UI: The styling and UI could be improved through more extensive use of CSS.
-
-- Security: There is currently no authentication for accessing the application. Assuming this should not be public accessible, some type of authentication should be considered in a production environment. A third-party solution like AWS Cognito could be used. Also, the proxy api's used have no security to ensure it is a valid user and request. After a user is authenticated, javascript web tokens is a reliable and straightforward practice that could be used to authorize and passed as a header in each request.
-
-- Logging: The application can use more robust logging of errors to monitor production performance and troubleshoot errors. AWS Cloudwatch is a basic out-of-the box practice that
-  could be used in AWS hosting environment.
-
-
-
-
-# Initial Requirements and Project Description
-
-# Chorus Interview
-
-## About this Interview
-
-Welcome to Chorus Engineering's Interview project!
-
-We're looking for engineers who are experienced, passionate, and obsessed with strong systems and high productivity.
-
-In order to facilitate this, we are providing an interview project that mirrors the technical stack that used
-here at Chorus.
-
-**You, the interviewee, have the power to decide if this is the technology that you want to work on!**
-
-The goal of this interview is to identify strengths through a take home project, followed by
-a 1 hour pairing session that will extend your work by creating features together.
-
 ## Tech Stack
 
 - React UI
@@ -121,9 +84,7 @@ Use `pm2 delete all` to delete the entry from the pm2 process list.
 
 ### Connecting to the Database
 
-Use whatever tool you'd like to connect to the database.
-
-[We recommend DataGrip.](https://www.jetbrains.com/datagrip/)
+Connect to the database.
 
 Here are the connection details below.
 
@@ -145,9 +106,8 @@ The UI should allow the user to:
 2. Select from the list of Pokémon
 3. Submit the Pokémon that we have selected to the backend.
 
-**It does not have to be a beautiful UX experience. We're aiming for functional.**
 
-### Completion Criteria
+### Requirements
 
 Database Requirements
 
@@ -167,21 +127,20 @@ API Requirements
 - Create Profiles
 - Handle receiving Pokémon related to Profiles
 
-## Submission Criteria
 
-All of your work should be located in a Github Repo.
+# Future Improvements
 
-Ensure your repo is public, and submit the URL back to the hiring manager.
+Given time limitations, elements necessary for a production application are out of scope for this project but would be
+included if more time was available. These include:
 
-### Troubleshooting
+- Unit Testing: There is currently to unit testing. The reliability of the application could be improved by adding testing of the functional components
+  that mimics user behavior using jest/React Testing Library, for example testing user selections in the UI. For the
+  api requests, mock data can be used to simulate responses and check validation behavior. End-to-end testing can also be considered using Cypress or something similar.
 
-> I can't execute pm2!
+- Styling/UI: The styling and UI could be improved through more extensive use of CSS.
 
-pm2 is part of the devDependencies, so when you install the dependencies, you should be able to
-execute the binary from node_modules.
+- Security: There is currently no authentication for accessing the application. Assuming this should not be public accessible, some type of authentication should be considered in a production environment. A third-party solution like AWS Cognito could be used. Also, the proxy api's used have no security to ensure it is a valid user and request. After a user is authenticated, javascript web tokens is a reliable and straightforward practice that could be used to authorize and passed as a header in each request.
 
-Either use `pnpm pm2` or add `node_modules/.bin` to your `PATH`.
+- Logging: The application can use more robust logging of errors to monitor production performance and troubleshoot errors. AWS Cloudwatch is a basic out-of-the box practice that
+  could be used in AWS hosting environment.
 
-> The requirements are confusing. I'm stuck.
-
-Contact the hiring manager, and inform them of the situation. Be specific and clear about your concerns or issues.
