@@ -31,7 +31,6 @@ TIn addition to the default libraries already part of the project, the project u
 - Typescript
 - Node/NestJS Backend
 - NX Monorepo
-- Github Actions CI
 - PostgreSQL Database
 - Docker / Docker Desktop
 
