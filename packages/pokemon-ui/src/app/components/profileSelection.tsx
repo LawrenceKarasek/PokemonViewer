@@ -22,17 +22,8 @@ const dropdownStyle = css`
   border: 1px solid #ccc;
 `;
 
-const errorStyle = css`
-  width: 40%;
-  margin: 0 auto;
-  color: red;
-  margin-bottom: 5px;
-`;
-
 const ProfileSelector = ({ onProfileSelect }: Props) => {
-  const { profiles, loading, error } = useSelector(
-    (state: RootState) => state.profile
-  );
+  const { profiles } = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -43,8 +34,6 @@ const ProfileSelector = ({ onProfileSelect }: Props) => {
 
   return (
     <div css={containerStyle}>
-      {loading && <p>Loading...</p>}
-      {error && <div css={errorStyle}>Error: {error}</div>}
       <select css={dropdownStyle} onChange={handleSelect} defaultValue="0">
         <option value="0" disabled>
           Select a Profile

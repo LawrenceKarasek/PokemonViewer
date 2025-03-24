@@ -24,7 +24,7 @@ export class Profile {
 
   @ManyToMany(() => Pokemon, { cascade: true })
   @JoinTable({
-    name: 'profile_pokemon', // 👈 Join table name
+    name: 'profile_pokemon', 
     joinColumn: { name: 'profile_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'pokemon_id', referencedColumnName: 'id' },
   })

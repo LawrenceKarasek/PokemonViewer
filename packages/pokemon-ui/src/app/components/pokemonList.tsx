@@ -1,4 +1,4 @@
-import React, { useState, memo, useMemo } from 'react';
+import React, { useState, memo, useCallback, Fragment, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { css } from '@emotion/react';
 import { RootState } from '../store';
@@ -49,54 +49,23 @@ const headerCellStyle = css`
 `;
 
 const errorStyle = css`
-  width: 40%;
+  width: 100%;
   margin: 0 auto;
   color: red;
   margin-bottom: 5px;
 `;
 
-const Row = memo(
-  ({
-    pokemonItem,
-    isSelected,
-    loading,
-    selectedProfileId,
-    handleCheckboxChange,
-    style,
-  }:any) => (
-    <div key={`pokemon-row-${pokemonItem.id}`} style={style} css={rowStyle}>
-      <span>{pokemonItem.name}</span>
-      <span>{pokemonItem.height}</span>
-      <span>{pokemonItem.weight}</span>
-      <span>{pokemonItem.baseExperience}</span>
-      <span>
-        <input
-          type="checkbox"
-          disabled={loading || selectedProfileId === 0}
-          checked={isSelected(pokemonItem.id)}
-          onChange={(e) =>
-            handleCheckboxChange(pokemonItem.id, e.target.checked)
-          }
-        />
-      </span>
-    </div>
-  ),
-  (prevProps, nextProps) =>
-    prevProps.pokemonItem.id === nextProps.pokemonItem.id &&
-    prevProps.isSelected(nextProps.pokemonItem.id) ===
-      nextProps.isSelected(nextProps.pokemonItem.id) &&
-    prevProps.loading === nextProps.loading
-);
-
 export const Header = memo(
   () => (
-    <div css={headerRowStyle}>
-      <span css={headerCellStyle}>Name</span>
-      <span css={headerCellStyle}>Height</span>
-      <span css={headerCellStyle}>Weight</span>
-      <span css={headerCellStyle}>Base Experience</span>
-      <span css={headerCellStyle}>Selected</span>
-    </div>
+    <Fragment>
+      <div css={headerRowStyle}>
+        <span css={headerCellStyle}>Name</span>
+        <span css={headerCellStyle}>Height</span>
+        <span css={headerCellStyle}>Weight</span>
+        <span css={headerCellStyle}>Base Experience</span>
+        <span css={headerCellStyle}>Selected</span>
+      </div>
+    </Fragment>
   ),
   () => true
 );
@@ -108,44 +77,48 @@ const PokemonList = ({ selectedProfileId }: PokemonListProps) => {
     (state: RootState) => state.profile
   );
   const [error, setError] = useState('');
-
-  const memoizedHeader = useMemo(() => <Header />, []);
-
   const isSelected = (pokemonId: number) =>
     profilePokemon?.savedPokemon.find((p) => p.id === pokemonId) ? true : false;
+  const memoizedHeader = useMemo(() => <Header />, []);
 
-  const handleCheckboxChange = async (pokemonId: number, checked: boolean) => {
-    try {
+  const handleCheckboxChange = useCallback(
+    async (pokemonId: number, checked: boolean) => {
       if (checked) {
         if (profilePokemon?.savedPokemon.length === 6) {
           setError('A maximum of 6 pokemon can be selected.');
           return;
         } else {
           const profileId: number = selectedProfileId;
-          await dispatch(addPokemon({ profileId, pokemonId })).unwrap();
-          await dispatch(fetchPokemonByProfile(profileId)).unwrap();
+          await dispatch(addPokemon({ profileId, pokemonId }));
+          await dispatch(fetchPokemonByProfile(profileId));
         }
       } else {
         setError('');
         const profileId: number = selectedProfileId;
-        await dispatch(removePokemon({ profileId, pokemonId })).unwrap();
-        await dispatch(fetchPokemonByProfile(profileId)).unwrap();
+        await dispatch(removePokemon({ profileId, pokemonId }));
+        await dispatch(fetchPokemonByProfile(profileId));
       }
-    } catch (err) {
-      setError('An error occurred while updating the selection.');
-    }
-  };
+    },
+    [selectedProfileId, profilePokemon, dispatch]
+  );
 
-  const rowRenderer = ({ key, index, style }:any) => (
-    <Row
-      key={`pokemon-row-${pokemon[index].id}`}
-      style={style}
-      pokemonItem={pokemon[index]}
-      isSelected={isSelected}
-      loading={loading}
-      selectedProfileId={selectedProfileId}
-      handleCheckboxChange={handleCheckboxChange}
-    />
+  const rowRenderer = ({ key, index, style }: any) => (
+    <div key={key} style={style} css={rowStyle}>
+      <span>{pokemon[index].name}</span>
+      <span>{pokemon[index].height}</span>
+      <span>{pokemon[index].weight}</span>
+      <span>{pokemon[index].baseExperience}</span>
+      <span>
+        <input
+          type="checkbox"
+          disabled={loading || selectedProfileId === 0}
+          checked={isSelected(pokemon[index].id)}
+          onChange={(e) =>
+            handleCheckboxChange(pokemon[index].id, e.target.checked)
+          }
+        />
+      </span>
+    </div>
   );
 
   return (
@@ -160,7 +133,6 @@ const PokemonList = ({ selectedProfileId }: PokemonListProps) => {
             rowHeight={50}
             rowCount={pokemon.length}
             rowRenderer={rowRenderer}
-            overscanRowCount={5}
           />
         )}
       </AutoSizer>
