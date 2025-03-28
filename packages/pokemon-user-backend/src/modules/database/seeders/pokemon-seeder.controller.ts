@@ -9,6 +9,6 @@ export class PokemonSeederController {
   @HttpCode(HttpStatus.OK)
   async seedPokemonData(): Promise<{ message: string }> {
     await this.seederService.seedPokemon();
-    return { message: '✅ Pokémon data seeding completed successfully!' };
+    return { message: 'Pokémon data seeding completed successfully!' };
   }
 }

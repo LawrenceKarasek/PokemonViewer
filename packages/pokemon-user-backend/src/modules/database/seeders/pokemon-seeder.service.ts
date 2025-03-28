@@ -12,8 +12,8 @@ export class PokemonSeederService {
   ) {}
 
   async seedPokemon() {
-    console.log('🌱 Seeding Pokémon data...');
-    for (let id = 1; id <= 151; id++) {
+    console.log('Seeding Pokémon data...');
+    for (let id = 1; id <= 150; id++) {
       const { data } = await axios.get(
         `https://pokeapi.co/api/v2/pokemon/${id}`
       );
@@ -24,8 +24,8 @@ export class PokemonSeederService {
         baseExperience: data.base_experience,
       });
       await this.pokemonRepository.save(pokemon);
-      console.log(`✅ Inserted: ${data.name}`);
+      console.log(`Inserted: ${data.name}`);
     }
-    console.log('🎉 Seeding completed!');
+    console.log('Seeding completed!');
   }
 }
